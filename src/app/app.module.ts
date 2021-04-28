@@ -3,15 +3,21 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { ProductListComponent } from './products/product-list.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   // Declares the AppComponent
   // Make sure to add new components to declaration so you can use them. Also import them.
+  // Declarations is to import our own Components we made for the app.
   declarations: [
     AppComponent
     , ProductListComponent],
   // Imports BrowserModule so our application runs correctly in the browser
-  imports: [BrowserModule],
+  // Imports is used to import outsourced Components.
+  imports: [
+    BrowserModule,
+    // Imported FormsModule so we could use ngModel in product-list.component.html
+    FormsModule],
   // Lists our AppComponent as the starting component for our app.
   bootstrap: [AppComponent]
 })

@@ -9,13 +9,17 @@
             <div class='col-md-2'>Filter by:</div>
             <div class='col-md-4'>
                 <!-- TextBox To Search -->
-                <input type='text' />
+                <!-- [()] Is a two way binding. It is used to update properties in the class file. -->
+                <!-- The property that is updated by this binding will reflect are interpolated values in the view. -->
+                <!-- Make sure to update AppModule delcaration to include FormsModule for ngModel -->
+                <input type='text' 
+                    [(ngModel)]='listFilter'/>
             </div>
         </div>
     </div>
     <div class='row'>
         <div class='col-md-6'>
-            <h4>Filtered by:</h4>
+            <h4>Filtered by: {{listFilter}}</h4>
         </div>
     </div>
     <div class='table-responsive'>
@@ -24,8 +28,11 @@
             <thead>
                 <tr>
                     <th>
-                        <button class='btn btn-primary'>
-                            Show Image
+                        <!-- Bound click event to a method in our ProductListComponent -->
+                        <button class='btn btn-primary'
+                            (click)='toggleImage()'>
+                            <!-- If showImage is true, display Hide Image, if false then Show Message -->
+                            {{showImage ? 'Hide' : 'Show'}} Image
                         </button>
                     </th>
                     <th>Product</th>
@@ -40,11 +47,19 @@
                 <!-- 'for product of products' will give you the values of the array -->
                 <!-- 'for product in products' will give you the indexes of the array -->
                 <tr *ngFor='let product of products'>
-                    <td></td>
+                    <!-- Property Binding Allows for us to bind element properties to template expressions. -->
+                    <!-- Element Property are in [] -->
+                    <td>
+                        <img *ngIf='showImage'
+                                [src]='product.imageUrl'
+                                [title]='product.productName'
+                                [style.width.px]='imageWidth'
+                                [style.margin.px]='imageMargin'>
+                    </td>
                     <td>{{ product.productName }}</td>
-                    <td>{{ product.productCode }}</td>
+                    <td>{{ product.productCode | lowercase }}</td>
                     <td>{{ product.releaseDate }}</td>
-                    <td>{{ product.price }}</td>
+                    <td>{{ product.price | currency:'USD':'symbol':'1.2-2'}}</td>
                     <td>{{ product.starRating }}</td>
                 </tr>
             </tbody>
