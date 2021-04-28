@@ -3,13 +3,13 @@ import { Component } from "@angular/core";
 // 2
 @Component({
   // ng new apm --prefix pm
-  // 'pm'-root is the prefix specified when we run the command above
+  // 'pm'-root is the prefix specified when we run the command above. AKA as a directive
   selector: 'pm-root',
   // Any valid html can be in the template.
   template:`
   <div>
-      <h1>{{pageTitle}}</h1>
-      <div>My First Component</div>
+    <h1>{{pageTitle}}</h1>
+    <pm-products></pm-products>
   </div>
   `
 })

@@ -1,0 +1,53 @@
+<div class='card'>
+    <div class='card-header'>
+        <!-- Added a binding from product-list.components.ts -->
+        <!-- This is also known as Interpolation -->
+        {{pageTitle}}
+    </div>
+    <div class='card-body'>
+        <div class='row'>
+            <div class='col-md-2'>Filter by:</div>
+            <div class='col-md-4'>
+                <!-- TextBox To Search -->
+                <input type='text' />
+            </div>
+        </div>
+    </div>
+    <div class='row'>
+        <div class='col-md-6'>
+            <h4>Filtered by:</h4>
+        </div>
+    </div>
+    <div class='table-responsive'>
+        <!-- *ngIf *gFor are part of the BrowserModule that we imported into AppModules-->
+        <table class='table' *ngIf='products.length'>
+            <thead>
+                <tr>
+                    <th>
+                        <button class='btn btn-primary'>
+                            Show Image
+                        </button>
+                    </th>
+                    <th>Product</th>
+                    <th>Code</th>
+                    <th>Available</th>
+                    <th>Price</th>
+                    <th>5 Star Rating</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- *ngIf *gFor are part of the BrowserModule that we imported into AppModules-->
+                <!-- 'for product of products' will give you the values of the array -->
+                <!-- 'for product in products' will give you the indexes of the array -->
+                <tr *ngFor='let product of products'>
+                    <td></td>
+                    <td>{{ product.productName }}</td>
+                    <td>{{ product.productCode }}</td>
+                    <td>{{ product.releaseDate }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>{{ product.starRating }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
