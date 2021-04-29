@@ -1,17 +1,37 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+import { IProducts } from "./product";
 
 @Component({
     selector: 'pm-products',
-    templateUrl: './product-list.component.html'
+    templateUrl: './product-list.component.html',
+    // We can implement style sheets via styleUrls.
+    // This will only affect the component it is implemented in and won't leak out
+    styleUrls: ['./product-list.component.css']
 })
 
-export class ProductListComponent {
+// implements OnInit must be used in the class otherwise you will get an error.
+export class ProductListComponent implements OnInit {
     pageTitle: string = 'Product List';
     imageWidth: number = 50;
     imageMargin: number = 2;
     showImage: boolean = false;
-    listFilter: string = 'cart';
-    products: any[] = [
+
+    private _listFilter: string = '';
+    get listFilter(): string {
+        return this._listFilter;
+    };
+    set listFilter(value: string) {
+        this._listFilter = value;
+        console.log('In setter:' , value);
+        this.filteredProducts = this.performFilter(value);
+        console.log(this.filteredProducts);
+    };
+
+    filteredProducts: IProducts[] = [];
+
+    // Specified the interface we are going to use for the array.
+    // This will allow for strongly typed coding.
+    products: IProducts[] = [
         {
             "productId": 2,
             "productName": "Garden Cart",
@@ -34,7 +54,24 @@ export class ProductListComponent {
         }
     ];
 
+    // returns IProducts[] which will be used in the filteredProducts array
+    performFilter(filterBy: string): IProducts[] {
+        filterBy = filterBy.toLocaleLowerCase();
+        // products array is using the filter method
+        // Arrow functions can be multi lined with {} but you will need to have a return statement
+        return this.products.filter((product: IProducts) =>  {
+            // Checks if the product name contains the filter criteria
+            console.log(product.productName.toLocaleLowerCase().includes(filterBy))
+            // Returns True or False
+            return product.productName.toLocaleLowerCase().includes(filterBy)});
+    };
+
     toggleImage(): void {
         this.showImage = !this.showImage;
+    };
+
+    ngOnInit(): void {
+        console.log('In OnInit');
+        this.listFilter = 'cart';
     }
 };

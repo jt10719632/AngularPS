@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { ProductListComponent } from './products/product-list.component';
 import { FormsModule } from '@angular/forms';
+import { ConvertToSpacesPipe } from './shared/convert-to-spaces.pipe';
 
 @NgModule({
   // Declares the AppComponent
@@ -11,7 +12,8 @@ import { FormsModule } from '@angular/forms';
   // Declarations is to import our own Components we made for the app.
   declarations: [
     AppComponent
-    , ProductListComponent],
+    , ProductListComponent
+    , ConvertToSpacesPipe],
   // Imports BrowserModule so our application runs correctly in the browser
   // Imports is used to import outsourced Components.
   imports: [
