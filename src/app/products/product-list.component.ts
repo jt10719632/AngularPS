@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { IProducts } from "./product";
+import { ProductService } from "./product.service";
 
 @Component({
     selector: 'pm-products',
@@ -11,6 +12,14 @@ import { IProducts } from "./product";
 
 // implements OnInit must be used in the class otherwise you will get an error.
 export class ProductListComponent implements OnInit {
+    
+    // (private productService: ProductService)
+    // This is the shorthand of assigning a private property in the constructor
+    // Here we are assigning the ProducService service to this Component
+    constructor(private productService: ProductService) {
+
+    };
+    
     pageTitle: string = 'Product List';
     imageWidth: number = 50;
     imageMargin: number = 2;
@@ -31,28 +40,7 @@ export class ProductListComponent implements OnInit {
 
     // Specified the interface we are going to use for the array.
     // This will allow for strongly typed coding.
-    products: IProducts[] = [
-        {
-            "productId": 2,
-            "productName": "Garden Cart",
-            "productCode": "GDN-0023",
-            "releaseDate": "March 18, 2021",
-            "description": "15 gallon capacity rolling garden cart",
-            "price": 22.11,
-            "starRating": 4.2,
-            "imageUrl": "assets/images/garden_cart.png"
-        },
-        {
-            "productId": 3,
-            "productName": "Hammer",
-            "productCode": "TBX-42069",
-            "releaseDate": "March 21, 2021",
-            "description": "Steel Hammer",
-            "price": 69.11,
-            "starRating": 2.6,
-            "imageUrl": "assets/images/hammer.png"
-        }
-    ];
+    products: IProducts[] = [];
 
     // returns IProducts[] which will be used in the filteredProducts array
     performFilter(filterBy: string): IProducts[] {
@@ -69,10 +57,16 @@ export class ProductListComponent implements OnInit {
     toggleImage(): void {
         this.showImage = !this.showImage;
     };
-
+    // OnInit is generally a good place to grab data or set data in
+    // For example if you were to query a database and store the products in the array.
+    // You would do that in here
     ngOnInit(): void {
+        // Storing data from our service into components products array
+        this.products = this.productService.getProducts();
+        // Pushing products array into filterProducts
+        // This is to display the products in the view as the view is pointing to the filteredProducts array.
+        this.filteredProducts = this.products;
         console.log('In OnInit');
-        this.listFilter = 'cart';
     };
 
     onRatingClicked(message: string): void {
